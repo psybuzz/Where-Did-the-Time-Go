@@ -8,6 +8,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.Toast;
 
 
 /**
@@ -65,10 +66,20 @@ public class ButtonChooser extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
 
-        prodButton = (Button) getView().findViewById(R.id.prod_button);
-        somewhatButton= (Button) getView().findViewById(R.id.somewhat_button);
-        unprodButton = (Button) getView().findViewById(R.id.unprod_button);
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_button_chooser, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
+        prodButton = (Button) view.findViewById(R.id.prod_button);
+        somewhatButton= (Button) view.findViewById(R.id.somewhat_button);
+        unprodButton = (Button) view.findViewById(R.id.unprod_button);
 
         prodButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -88,13 +99,6 @@ public class ButtonChooser extends Fragment {
                 mListener.onButtonFragmentInteraction(-1);
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_button_chooser, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event

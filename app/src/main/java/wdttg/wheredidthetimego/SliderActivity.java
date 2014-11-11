@@ -41,7 +41,9 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
         int oldminute = minute < 30 ? minute + 30 : minute - 30;
         String am = hour < 12 ? "am" : "pm";
         String oldam = oldhour < 12 ? "am" : "pm";
-        hour = am == "am" ? oldhour : oldhour - 12;
+        hour = am == "am" ? hour : hour - 12;
+        oldhour = oldhour < 1 ? oldhour + 12 : oldhour;
+        hour = hour < 1 ? hour + 12 : hour;
         oldhour = oldam == "am" ? oldhour : oldhour - 12;
         timespanLabel = (TextView) findViewById(R.id.timespan_label);
         timespanLabel.setText("From " + oldhour + ":" + oldminute + am +
@@ -88,6 +90,8 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
+        timespanLabel.setText("ITEM SELECTED YO");
+
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.

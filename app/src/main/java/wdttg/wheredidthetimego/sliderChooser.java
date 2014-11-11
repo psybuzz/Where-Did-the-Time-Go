@@ -61,7 +61,17 @@ public class SliderChooser extends Fragment {
             mParam1 = getArguments().getString(ARG_PARAM1);
             mParam2 = getArguments().getString(ARG_PARAM2);
         }
+    }
 
+    @Override
+    public View onCreateView(LayoutInflater inflater, ViewGroup container,
+                             Bundle savedInstanceState) {
+        // Inflate the layout for this fragment
+        return inflater.inflate(R.layout.fragment_slider_chooser, container, false);
+    }
+
+    @Override
+    public void onViewCreated(View view, Bundle savedInstanceState){
         slider = (SeekBar) getView().findViewById(R.id.seekBar);
         slider.setOnSeekBarChangeListener(new SeekBar.OnSeekBarChangeListener() {
             @Override
@@ -79,13 +89,6 @@ public class SliderChooser extends Fragment {
                 mListener.onSliderFragmentInteraction(seekBar.getProgress());
             }
         });
-    }
-
-    @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_slider_chooser, container, false);
     }
 
     // TODO: Rename method, update argument and hook method into UI event
