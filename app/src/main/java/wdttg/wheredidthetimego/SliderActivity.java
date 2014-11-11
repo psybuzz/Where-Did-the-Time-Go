@@ -90,8 +90,6 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        timespanLabel.setText("ITEM SELECTED YO");
-
         // Handle action bar item clicks here. The action bar will
         // automatically handle clicks on the Home/Up button, so long
         // as you specify a parent activity in AndroidManifest.xml.
@@ -103,7 +101,7 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
     }
 
     // Setup handlers for when the user has made a choice of productivity value.  For the button
-    // fragment, 1 - productive, 0 - somewhat, and -1 - unproductive.
+    // fragment, 100 - productive, 50 - somewhat, and 0 - unproductive.
     @Override
     public void onButtonFragmentInteraction(int prodValue) {
         // Save prodValue for the current time period.

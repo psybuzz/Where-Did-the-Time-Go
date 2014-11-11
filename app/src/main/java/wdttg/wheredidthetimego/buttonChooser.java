@@ -84,19 +84,19 @@ public class ButtonChooser extends Fragment {
         prodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onButtonFragmentInteraction(1);
+                mListener.onButtonFragmentInteraction(100);
             }
         });
         somewhatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onButtonFragmentInteraction(0);
+                mListener.onButtonFragmentInteraction(50);
             }
         });
         unprodButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onButtonFragmentInteraction(-1);
+                mListener.onButtonFragmentInteraction(0);
             }
         });
     }

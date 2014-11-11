@@ -92,6 +92,9 @@ public class ResultActivity extends Activity implements ActionBar.TabListener {
         // as you specify a parent activity in AndroidManifest.xml.
         int id = item.getItemId();
         if (id == R.id.action_settings) {
+            // Switch to the settings activity.
+            startActivity(new Intent(ResultActivity.this, SettingsActivity.class));
+
             return true;
         }
         return super.onOptionsItemSelected(item);
