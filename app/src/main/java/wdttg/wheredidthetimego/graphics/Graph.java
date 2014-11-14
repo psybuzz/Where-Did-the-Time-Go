@@ -8,6 +8,9 @@ import android.graphics.RectF;
 import android.util.DisplayMetrics;
 import android.view.Display;
 import android.view.View;
+import android.widget.Button;
+
+import wdttg.wheredidthetimego.R;
 
 /**
  * Created by the1banana on 11/13/2014.
@@ -32,6 +35,7 @@ public class Graph extends View {
     //needed to draw a scatter plot:
     private float[] raw;
     private String[] time;
+    private Button changeView;
 
     //width and height are inaccessible from View and require an activity
     //requires: the context
@@ -102,7 +106,7 @@ public class Graph extends View {
         int segments = raw.length-1;
         paint.setColor(Color.GRAY);
         paint.setStrokeWidth(0);
-        canvas.drawLine(w/6, w/6+(w*2/3)*7/10, w*5/6, w/6+(w*2/3)*7/10, paint);
+        canvas.drawLine(w / 6, w / 6 + (w * 2 / 3) * 7 / 10, w * 5 / 6, w / 6 + (w * 2 / 3) * 7 / 10, paint);
         canvas.drawLine(w/6, w/6+(w*2/3)*3/10, w*5/6, w/6+(w*2/3)*3/10, paint);
         paint.setColor(Color.WHITE);
         paint.setStrokeWidth(5);
@@ -142,5 +146,10 @@ public class Graph extends View {
         } else if(mode == 2){
             drawScatter(canvas);
         }
+    }
+
+    public void changeType(){
+        mode = (mode+1)%3;
+        this.invalidate();
     }
 }
