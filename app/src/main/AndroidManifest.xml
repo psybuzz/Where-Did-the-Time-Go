@@ -29,16 +29,40 @@
                 android:value="wdttg.wheredidthetimego.ResultActivity" />
         </activity>
 
+        <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+        <receiver android:name=".history.NotificationGenerator"/>
+        <receiver android:name="history.NotificationGenerator$TapReceiver" />
+        <receiver android:name="history.NotificationGenerator$NoReceiver" />
+        <receiver android:name="history.NotificationGenerator$KindaReceiver" />
+
+        <receiver android:name="wdttg.wheredidthetimego.history.NotificationGenerator$TapReceiver">
+            <intent-filter>
+                <action android:name="wdttg.wheredidthetimego.tap"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="wdttg.wheredidthetimego.history.NotificationGenerator$YesReceiver">
+            <intent-filter>
+                <action android:name="wdttg.wheredidthetimego.yes"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="wdttg.wheredidthetimego.history.NotificationGenerator$KindaReceiver">
+            <intent-filter>
+                <action android:name="wdttg.wheredidthetimego.kinda"/>
+            </intent-filter>
+        </receiver>
+
+        <receiver android:name="wdttg.wheredidthetimego.history.NotificationGenerator$NoReceiver">
+            <intent-filter>
+                <action android:name="wdttg.wheredidthetimego.no"/>
+            </intent-filter>
+        </receiver>
+
+
         <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-        <receiver
-            android:name="wdttg.wheredidthetimego.history.NotificationGenerator"
-            android:process=":remote" />
 
-        <activity
-            android:name="wdttg.wheredidthetimego.AChartEnginePieChartActivity"
-            android:label="@string/title_activity_achart_engine_pie_chart" >
-        </activity>
     </application>
 
 </manifest>

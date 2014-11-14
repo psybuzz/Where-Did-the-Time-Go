@@ -5,13 +5,14 @@ import android.content.Context;
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
 
+import java.io.Closeable;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by Matthew on 11/9/2014.
  */
-public class LogRepository implements AutoCloseable{
+public class LogRepository implements Closeable{
 
     private SQLiteDatabase database;
     private LogDataHandler dataHandler;
@@ -28,7 +29,7 @@ public class LogRepository implements AutoCloseable{
 
 
     @Override
-    public void close() throws Exception {
+    public void close() {
         database.close();
     }
 
@@ -48,7 +49,7 @@ public class LogRepository implements AutoCloseable{
         return getLogEntry(insertId);
     }
 
-    public LogEntry updateLogEntry(int id, Float productivity) {
+    public LogEntry updateLogEntry(long id, Double productivity) {
         ContentValues values = new ContentValues();
         values.put(LogDataHandler.COLUMN_PRODUCTIVITY, productivity);
         long updateId = database.update(LogDataHandler.TABLE_LOGS, values, LogDataHandler.COLUMN_ID + " = " + id, null);
