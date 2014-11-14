@@ -32,6 +32,7 @@ public class Graph extends View {
     float max;
     private int[] COLORS={Color.GREEN,Color.YELLOW,Color.RED};
     RectF rectf;
+    RectF smallRectf;
     //needed to draw a scatter plot:
     private float[] raw;
     private String[] time;
@@ -49,6 +50,7 @@ public class Graph extends View {
 
         //pieChart and barChart
         rectf = new RectF(w/6, w/6, w*5/6, w*5/6);
+        smallRectf = new RectF(w/3, w/3, w*2/3, w*2/3);
         magnitudes = new float[3];
         parsePieBar(data);
 
@@ -98,15 +100,29 @@ public class Graph extends View {
     private void drawPie(Canvas canvas){
         int pieTemp = 0;
         for (int i = 0; i < magnitudes.length; i++) {
+            double radians = -1;
             if (i == 0) {
                 paint.setColor(COLORS[i]);
                 canvas.drawArc(rectf, 0, 360*(magnitudes[i]/total), true, paint);
+                if(magnitudes[i] > 0){
+                    radians = 2*Math.PI*magnitudes[i]/total;
+                }
             }
-            else
-            {
+            else {
                 pieTemp += 360*(magnitudes[i - 1]/total);
                 paint.setColor(COLORS[i]);
                 canvas.drawArc(rectf, pieTemp, 360*magnitudes[i]/total, true, paint);
+                if(magnitudes[i] > 0){
+                    radians = 2*Math.PI*(180*magnitudes[i]/total + pieTemp/2)/360;
+                }
+            }
+            if(radians != -1) {
+                double x = w / 3 + Math.cos(radians) * w / 3;
+                double y = w / 3 + Math.sin(radians) * w / 3;
+                paint.setColor(Color.BLACK);
+                paint.setTextSize(24);
+                paint.setTextAlign(Paint.Align.CENTER);
+                canvas.drawText("" + magnitudes[i], (float)x, (float)y-6, paint);
             }
         }
     }
