@@ -5,32 +5,35 @@
     tools:context="wdttg.wheredidthetimego.ButtonChooser">
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:text="Very Productive"
         android:id="@+id/prod_button"
         android:layout_marginTop="-50dp"
         android:layout_below="@+id/slider_prod_label"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="#64009b00" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:text="Unproductive"
         android:layout_marginTop="50dp"
         android:id="@+id/unprod_button"
         android:layout_below="@+id/somewhat_button"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="#649b0000" />
 
     <Button
-        android:layout_width="wrap_content"
+        android:layout_width="165dp"
         android:layout_height="wrap_content"
         android:text="Somewhat"
         android:id="@+id/somewhat_button"
         android:layout_below="@+id/prod_button"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="#649b9b00" />
 
 </FrameLayout>
