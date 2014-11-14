@@ -38,6 +38,8 @@ public class FirstTabFragment extends Fragment {
     private OnFragmentInteractionListener mListener;
 
     private Graph pg;
+    private ImageButton switchGraphButton;
+    private ImageButton playButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -100,8 +102,8 @@ public class FirstTabFragment extends Fragment {
         fl.addView(pg);
 
         // Add listener for the play button and switch graph view button.
-        ImageButton switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
-        ImageButton playButton = (ImageButton) v.findViewById(R.id.playButton);
+        switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
+        playButton = (ImageButton) v.findViewById(R.id.playButton);
 
         switchGraphButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -113,8 +115,20 @@ public class FirstTabFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 Logger.toggleLogging(view.getContext());
+                if (Logger.isLogging(view.getContext())){
+                    playButton.setImageResource(R.drawable.stop);
+                } else {
+                    playButton.setImageResource(R.drawable.play);
+                }
             }
         });
+
+        // Update the play/pause button.
+        if (Logger.isLogging(v.getContext())){
+            playButton.setImageResource(R.drawable.stop);
+        } else {
+            playButton.setImageResource(R.drawable.play);
+        }
 
         return v;
     }
