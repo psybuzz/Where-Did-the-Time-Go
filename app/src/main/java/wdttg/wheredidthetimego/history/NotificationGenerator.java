@@ -219,7 +219,7 @@ public class NotificationGenerator extends BroadcastReceiver{
         AlarmManager alarmManager = (AlarmManager) context.getSystemService(
                 Context.ALARM_SERVICE);
 
-        long interval = NotificationSettings.getSettings(context).timePeriod /4;
+        long interval = NotificationSettings.getSettings(context).timePeriod;
 
         Log.d("hi", "Started logging in NotificationGenerator - interval: " + interval);
 
