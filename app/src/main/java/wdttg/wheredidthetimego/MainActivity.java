@@ -18,6 +18,8 @@ import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 
+import wdttg.wheredidthetimego.history.Logger;
+
 
 public class MainActivity extends Activity implements ActionBar.TabListener, FirstTabFragment.OnFragmentInteractionListener,
         SecondTabFragment.OnFragmentInteractionListener {
@@ -193,6 +195,8 @@ public class MainActivity extends Activity implements ActionBar.TabListener, Fir
         public View onCreateView(LayoutInflater inflater, ViewGroup container,
                 Bundle savedInstanceState) {
             View rootView = inflater.inflate(R.layout.fragment_result, container, false);
+            // Logger.startLogging(rootView.getContext());      // TODO: Turn on if want logging
+            // TODO: Create button that toggles logging/notifications
             return rootView;
         }
     }
