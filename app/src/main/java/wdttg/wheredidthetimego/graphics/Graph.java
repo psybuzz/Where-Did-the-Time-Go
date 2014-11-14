@@ -105,7 +105,7 @@ public class Graph extends View {
                 paint.setColor(COLORS[i]);
                 canvas.drawArc(rectf, 0, 360*(magnitudes[i]/total), true, paint);
                 if(magnitudes[i] > 0){
-                    radians = 2*Math.PI*magnitudes[i]/total;
+                    radians = Math.PI*magnitudes[i]/total;
                 }
             }
             else {
@@ -113,16 +113,16 @@ public class Graph extends View {
                 paint.setColor(COLORS[i]);
                 canvas.drawArc(rectf, pieTemp, 360*magnitudes[i]/total, true, paint);
                 if(magnitudes[i] > 0){
-                    radians = 2*Math.PI*(180*magnitudes[i]/total + pieTemp/2)/360;
+                    radians = Math.PI*(360*magnitudes[i]/total + pieTemp + pieTemp)/360;
                 }
             }
             if(radians != -1) {
-                double x = w / 3 + Math.cos(radians) * w / 3;
-                double y = w / 3 + Math.sin(radians) * w / 3;
+                double x =( w / 2) + Math.cos(radians) * w / 6;
+                double y =( w / 2) + Math.sin(radians) * w / 6;
                 paint.setColor(Color.BLACK);
-                paint.setTextSize(24);
+                paint.setTextSize(36);
                 paint.setTextAlign(Paint.Align.CENTER);
-                canvas.drawText("" + magnitudes[i], (float)x, (float)y-6, paint);
+                canvas.drawText("" + (int)magnitudes[i], (float)x, (float)y, paint);
             }
         }
     }
@@ -132,10 +132,10 @@ public class Graph extends View {
             float m = magnitudes[i];
             paint.setColor(COLORS[i]);
             canvas.drawRect(w / 6 + i * w * 2 / 9, w * 5 / 6 - (m / max) * w * 2 / 3, w * 7 / 18 + i * w * 2 / 9, w * 5 / 6, paint);
-            paint.setColor(Color.BLUE);
+            paint.setColor(Color.BLACK);
             paint.setTextAlign(Paint.Align.CENTER);
-            paint.setTextSize(24);
-            canvas.drawText("" + ((int)magnitudes[i]), 5*w/18+i*w*2/9, w*5/6+36, paint);
+            paint.setTextSize(36);
+            canvas.drawText("" + ((int)magnitudes[i]), 5*w/18+i*w*2/9, w*5/6-18, paint);
         }
     }
 
