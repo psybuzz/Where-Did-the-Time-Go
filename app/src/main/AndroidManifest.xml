@@ -35,10 +35,6 @@
             android:name="wdttg.wheredidthetimego.history.NotificationGenerator"
             android:process=":remote" />
 
-        <activity
-            android:name="wdttg.wheredidthetimego.AChartEnginePieChartActivity"
-            android:label="@string/title_activity_achart_engine_pie_chart" >
-        </activity>
     </application>
 
 </manifest>
