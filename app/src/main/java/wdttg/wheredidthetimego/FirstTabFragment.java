@@ -10,7 +10,7 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.FrameLayout;
 
-import wdttg.wheredidthetimego.graphics.PieGraph;
+import wdttg.wheredidthetimego.graphics.Graph;
 
 
 /**
@@ -71,10 +71,11 @@ public class FirstTabFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_first_tab, container, false);
         FrameLayout fl = (FrameLayout) v.findViewById(R.id.mainframe);
         float[] fakeData = new float[3];
+        String[] blah = {"blah", "blah2", "blah3"}; // TODO: Use real data
         fakeData[0] = 3;
         fakeData[1] = 2;
         fakeData[2] = 1;
-        PieGraph pg = new PieGraph(v.getContext(), fakeData);
+        Graph pg = new Graph(v.getContext(), 0, fakeData, blah);
         fl.addView(pg);
         return v;
     }
