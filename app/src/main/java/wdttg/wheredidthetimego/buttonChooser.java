@@ -1,8 +1,10 @@
 package wdttg.wheredidthetimego;
 
 import android.app.Activity;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -90,7 +92,9 @@ public class ButtonChooser extends Fragment {
         somewhatButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                mListener.onButtonFragmentInteraction(50);
+                SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
+                int somewhatValue = prefs.getInt("somewhat_percent", 50 /* default value */);
+                mListener.onButtonFragmentInteraction(somewhatValue);
             }
         });
         unprodButton.setOnClickListener(new View.OnClickListener() {

@@ -1,7 +1,9 @@
 package wdttg.wheredidthetimego;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -58,8 +60,16 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
         buttonChooser = new ButtonChooser();
         buttonChooser.setArguments(getIntent().getExtras());
 
-        // Add the button chooser to the fragment container.
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, buttonChooser).commit();
+        // Get the default input type from preferences.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String inputMode = prefs.getString("input_mode", "Button" /* default value */);
+        if (inputMode == "Button"){
+            // Add the button chooser to the fragment container.
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, buttonChooser).commit();
+        } else {
+            // Add the slider chooser to the fragment container.
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, sliderChooser).commit();
+        }
 
         // Register listener for mode toggle button.  It should switch between the discrete button
         // chooser and the slider chooser.
