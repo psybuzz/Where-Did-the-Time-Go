@@ -30,4 +30,25 @@
         android:negativeButtonText="@null"
         android:positiveButtonText="@null" />
 
+    <ListPreference
+        android:key="interval_list"
+        android:title="@string/pref_title_ping_interval"
+        android:defaultValue="30 minutes"
+        android:entries="@array/pref_interval_titles"
+        android:entryValues="@array/pref_interval_list_values" />
+
+    <ListPreference
+        android:key="input_mode"
+        android:title="@string/pref_title_input_mode"
+        android:defaultValue="Button"
+        android:entries="@array/pref_input_list_titles"
+        android:entryValues="@array/pref_input_list_values" />
+
+    <ListPreference
+        android:key="somewhat_percent"
+        android:title="@string/pref_title_somewhat_percent"
+        android:defaultValue="50"
+        android:entries="@array/pref_somewhat_percent_titles"
+        android:entryValues="@array/pref_somewhat_percent_values" />
+
 </PreferenceScreen>

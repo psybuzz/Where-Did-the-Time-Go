@@ -24,6 +24,48 @@
         <item>-1</item>
     </string-array>
 
+    <string name="pref_title_ping_interval">Ping Interval</string>
+    <string-array name="pref_interval_titles">
+        <item>15 minutes</item>
+        <item>30 minutes</item>
+        <item>1 hour</item>
+        <item>3 hours</item>
+        <item>Never</item>
+    </string-array>
+    <string-array name="pref_interval_list_values">
+        <item>15</item>
+        <item>30</item>
+        <item>60</item>
+        <item>180</item>
+        <item>-1</item>
+    </string-array>
+
+    <string name="pref_title_input_mode">Default Productivity Input Type</string>
+    <string-array name="pref_input_list_titles">
+        <item>Buttons</item>
+        <item>Slider</item>
+    </string-array>
+    <string-array name="pref_input_list_values">
+        <item>Buttons</item>
+        <item>Slider</item>
+    </string-array>
+
+    <string name="pref_title_somewhat_percent">\'Kinda\' Productive Percent</string>
+    <string-array name="pref_somewhat_percent_titles">
+        <item>20</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>80</item>
+    </string-array>
+    <string-array name="pref_somewhat_percent_values">
+        <item>20</item>
+        <item>25</item>
+        <item>50</item>
+        <item>75</item>
+        <item>80</item>
+    </string-array>
+
     <!-- Example settings for Data & Sync -->
     <string name="pref_header_data_sync">Data &amp; sync</string>
 
@@ -50,10 +92,22 @@
     <!-- Example settings for Notifications -->
     <string name="pref_header_notifications">Notifications</string>
 
-    <string name="pref_title_new_message_notifications">New message notifications</string>
+    <string name="pref_title_new_message_notifications">Enable notifications</string>
 
     <string name="pref_title_ringtone">Ringtone</string>
     <string name="pref_ringtone_silent">Silent</string>
 
     <string name="pref_title_vibrate">Vibrate</string>
+
+    <string name="pref_title_led_color">LED Color</string>
+    <string-array name="pref_led_color_titles">
+        <item>Red</item>
+        <item>Green</item>
+        <item>Blue</item>
+    </string-array>
+    <string-array name="pref_led_color_values">
+        <item>0xffff0000</item>
+        <item>0xff00ff00</item>
+        <item>0xff0000ff</item>
+    </string-array>
 </resources>
