@@ -8,9 +8,12 @@ import android.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
 import android.widget.FrameLayout;
+import android.widget.ImageButton;
 
 import wdttg.wheredidthetimego.graphics.Graph;
+import wdttg.wheredidthetimego.history.Logger;
 
 
 /**
@@ -33,6 +36,8 @@ public class FirstTabFragment extends Fragment {
     private String mParam2;
 
     private OnFragmentInteractionListener mListener;
+
+    private Graph pg;
 
     /**
      * Use this factory method to create a new instance of
@@ -91,8 +96,26 @@ public class FirstTabFragment extends Fragment {
         fakeData[14] = 100;
         fakeData[15] = 90;
         fakeData[16] = 95;
-        Graph pg = new Graph(v.getContext(), 2, fakeData, blah);
+        pg = new Graph(v.getContext(), 2, fakeData, blah);
         fl.addView(pg);
+
+        // Add listener for the play button and switch graph view button.
+        ImageButton switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
+        ImageButton playButton = (ImageButton) v.findViewById(R.id.playButton);
+
+        switchGraphButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                pg.changeType();
+            }
+        });
+        playButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Logger.toggleLogging(view.getContext());
+            }
+        });
+
         return v;
     }
 
