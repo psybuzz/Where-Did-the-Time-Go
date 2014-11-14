@@ -53,19 +53,36 @@ public class Graph extends View {
         parsePieBar(data);
 
         //scatterPlot
-        raw = data;
-        time = timeStamps;
+        parseScatter(data, timeStamps);
     }
 
-    private void parsePieBar(float[] parsedData){
+    private void parseScatter(float[] data, String[] timeStamps){
+        if(data.length > 24){
+            raw = new float[24];
+            time = new String[24];
+            for(int i = data.length-24; i < data.length; i++){
+                raw[i-(data.length-24)] = data[i];
+                time[i-(data.length-24)] = timeStamps[i];
+            }
+        } else {
+            raw = data;
+            time = timeStamps;
+        }
+    }
+
+    private void parsePieBar(float[] data){
         total = 0;
         int redTotal = 0;
         int yellowTotal = 0;
         int greenTotal = 0;
-        for(int i=0;i<parsedData.length;i++) {
-            if(parsedData[i] < 30) {
+        int i = 0;
+        if(data.length >= 24) {
+            i = data.length - 24;
+        }
+        for (i = 0; i < data.length; i++) {
+            if (data[i] < 30) {
                 redTotal++;
-            } else if(parsedData[i] < 70){
+            } else if (data[i] < 70) {
                 yellowTotal++;
             } else {
                 greenTotal++;
@@ -141,15 +158,35 @@ public class Graph extends View {
         canvas.drawRect(rectf, paint);
         if(mode == 0){
             drawPie(canvas);
+            paint.setColor(Color.BLUE);
+            paint.setTextSize(36);
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("Pie Chart", w/6, w*5/6+48, paint);
         } else if(mode == 1){
             drawBar(canvas);
+            paint.setColor(Color.BLUE);
+            paint.setTextSize(36);
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("Bar Chart", w/6, w*5/6+48, paint);
         } else if(mode == 2){
             drawScatter(canvas);
+            paint.setColor(Color.BLUE);
+            paint.setTextSize(36);
+            paint.setTextAlign(Paint.Align.CENTER);
+            canvas.drawText("Scatterplot", w/6, w*5/6+48, paint);
         }
     }
 
+    //call when the "change graph type" button is pressed.
     public void changeType(){
         mode = (mode+1)%3;
+        this.invalidate();
+    }
+
+    //call with updated data to update the graph
+    public void update(float[] data, String[] timeStamp){
+        parsePieBar(data);
+        parseScatter(data, timeStamp);
         this.invalidate();
     }
 }
