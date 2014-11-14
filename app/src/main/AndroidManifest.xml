@@ -29,7 +29,6 @@
                 android:value="wdttg.wheredidthetimego.ResultActivity" />
         </activity>
 
-<<<<<<< HEAD
         <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
         <receiver android:name=".history.NotificationGenerator"/>
         <receiver android:name="history.NotificationGenerator$TapReceiver" />
@@ -61,13 +60,8 @@
         </receiver>
 
 
-=======
         <uses-permission android:name="android.permission.WAKE_LOCK" />
 
-        <receiver
-            android:name="wdttg.wheredidthetimego.history.NotificationGenerator"
-            android:process=":remote" />
->>>>>>> FETCH_HEAD
 
     </application>
 
