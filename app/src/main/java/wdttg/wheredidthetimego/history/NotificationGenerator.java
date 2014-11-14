@@ -4,17 +4,20 @@ import android.app.AlarmManager;
 import android.app.Notification;
 import android.app.NotificationManager;
 import android.app.PendingIntent;
+import android.content.ActivityNotFoundException;
 import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.content.pm.PackageManager;
 import android.support.v4.app.NotificationCompat;
 import android.util.Log;
 
 import java.util.Date;
 
 import wdttg.wheredidthetimego.R;
+import wdttg.wheredidthetimego.SliderActivity;
 
 
 /**
@@ -82,9 +85,20 @@ public class NotificationGenerator extends BroadcastReceiver{
                 }
             };
 
+            // Launch the app and slider activity.
+            try{
+                Intent launchIntent = new Intent(context, SliderActivity.class);
+                launchIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                context.startActivity(launchIntent);
+            } catch (ActivityNotFoundException e){
+                Log.d("hi", "Activity not found! :(");
+            }
 
             if (Logger.getSubscriber() != null) {
                 Logger.getSubscriber().fillLog(current.getStartTime(), current.getEndTime(), callback);
+
+                // HACK: Bypass the subscriber model and store the static callback.
+                Logger.callback = callback;
             }
 
         }

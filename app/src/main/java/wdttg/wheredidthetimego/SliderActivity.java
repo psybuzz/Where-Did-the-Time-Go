@@ -16,6 +16,8 @@ import android.widget.ToggleButton;
 import java.util.Calendar;
 import java.util.Date;
 
+import wdttg.wheredidthetimego.history.Logger;
+
 
 public class SliderActivity extends FragmentActivity implements ButtonChooser.OnFragmentInteractionListener,
         SliderChooser.OnFragmentInteractionListener{
@@ -121,7 +123,8 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
     @Override
     public void onButtonFragmentInteraction(int prodValue) {
         // Save prodValue for the current time period.
-        // ...
+//        Logger.repo
+//        repository.createLogEntry(250, 260, 0.5);
 
         // Go back.
         onBackPressed();

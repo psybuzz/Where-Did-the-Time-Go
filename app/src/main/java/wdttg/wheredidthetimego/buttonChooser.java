@@ -96,7 +96,7 @@ public class ButtonChooser extends Fragment {
             @Override
             public void onClick(View view) {
                 SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(view.getContext());
-                int somewhatValue = prefs.getInt("somewhat_percent", 50 /* default value */);
+                int somewhatValue = Integer.parseInt(prefs.getString("somewhat_percent", "50" /* default value */));
                 mListener.onButtonFragmentInteraction(somewhatValue);
             }
         });
