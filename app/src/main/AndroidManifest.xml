@@ -28,6 +28,10 @@
                 android:name="android.support.PARENT_ACTIVITY"
                 android:value="wdttg.wheredidthetimego.ResultActivity" />
         </activity>
+
+        <uses-permission android:name="android.permission.WAKE_LOCK"></uses-permission>
+        <receiver android:process=":remote" android:name=".history.NotificationGenerator"></receiver>
+
     </application>
 
 </manifest>
