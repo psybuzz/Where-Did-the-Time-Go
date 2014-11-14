@@ -81,6 +81,7 @@ public class NotificationGenerator extends BroadcastReceiver{
                     updateCurrentLogEntry(context, productivity);
                 }
             };
+            
 
             if (Logger.getSubscriber() != null) {
                 Logger.getSubscriber().fillLog(current.getStartTime(), current.getEndTime(), callback);
