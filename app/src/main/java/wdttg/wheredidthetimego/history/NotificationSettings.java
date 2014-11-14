@@ -55,7 +55,7 @@ public class NotificationSettings {
 
         NotificationSettings toReturn = new NotificationSettings();
 
-        toReturn.timePeriod = preferences.getLong("timePeriod", 15L*60*1000);
+        toReturn.timePeriod = preferences.getLong("timePeriod", 1L*60*1000);
         toReturn.defaultInputType = NotificationInputType
                 .valueOf(preferences.getString("defaultInputType", "Buttons"));
         toReturn.kindaProductivePercent = (double)
