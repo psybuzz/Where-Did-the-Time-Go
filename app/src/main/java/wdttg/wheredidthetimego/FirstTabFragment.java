@@ -70,12 +70,28 @@ public class FirstTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_first_tab, container, false);
         FrameLayout fl = (FrameLayout) v.findViewById(R.id.mainframe);
-        float[] fakeData = new float[3];
-        String[] blah = {"blah", "blah2", "blah3"}; // TODO: Use real data
-        fakeData[0] = 3;
-        fakeData[1] = 2;
-        fakeData[2] = 1;
-        Graph pg = new Graph(v.getContext(), 0, fakeData, blah);
+        float[] fakeData = new float[17];
+        String[] blah = new String[17]; // TODO: Use real data
+        blah[0] = "2:00 PM";
+        blah[16] = "10:00 PM";
+        fakeData[0] = 5;
+        fakeData[1] = 25;
+        fakeData[2] = 35;
+        fakeData[3] = 80;
+        fakeData[4] = 60;
+        fakeData[5] = 0;
+        fakeData[6] = 45;
+        fakeData[7] = 45;
+        fakeData[8] = 75;
+        fakeData[9] = 60;
+        fakeData[10] = 10;
+        fakeData[11] = 85;
+        fakeData[12] = 60;
+        fakeData[13] = 75;
+        fakeData[14] = 100;
+        fakeData[15] = 90;
+        fakeData[16] = 95;
+        Graph pg = new Graph(v.getContext(), 2, fakeData, blah);
         fl.addView(pg);
         return v;
     }

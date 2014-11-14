@@ -1,7 +1,9 @@
 package wdttg.wheredidthetimego;
 
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
@@ -33,21 +35,25 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
             return;
         }
 
+        modeToggleButton = (ToggleButton)findViewById(R.id.modeToggleButton);
+
         // Get the current time range and update the time span label.
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        int oldhour = minute < 30 ? hour - 1 : hour;
-        int oldminute = minute < 30 ? minute + 30 : minute - 30;
+        int oldHour = minute < 30 ? hour - 1 : hour;
+        int oldMinute = minute < 30 ? minute + 30 : minute - 30;
         String am = hour < 12 ? "am" : "pm";
-        String oldam = oldhour < 12 ? "am" : "pm";
+        String oldam = oldHour < 12 ? "am" : "pm";
         hour = am == "am" ? hour : hour - 12;
-        oldhour = oldhour < 1 ? oldhour + 12 : oldhour;
+        oldHour = oldHour < 1 ? oldHour + 12 : oldHour;
         hour = hour < 1 ? hour + 12 : hour;
-        oldhour = oldam == "am" ? oldhour : oldhour - 12;
+        oldHour = oldam == "am" ? oldHour : oldHour - 12;
+        String oldMinuteStr = oldMinute < 10 ? "0" + String.valueOf(oldMinute) : String.valueOf(oldMinute);
+        String minuteStr = minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute);
         timespanLabel = (TextView) findViewById(R.id.timespan_label);
-        timespanLabel.setText("From " + oldhour + ":" + oldminute + am +
-                " to " + hour + ":" + minute + oldam + " I was");
+        timespanLabel.setText("From " + oldHour + ":" + oldMinuteStr + am +
+                " to " + hour + ":" + minuteStr + oldam + " I was");
 
         // Create a slider chooser fragment.
         sliderChooser = new SliderChooser();
@@ -56,12 +62,22 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
         buttonChooser = new ButtonChooser();
         buttonChooser.setArguments(getIntent().getExtras());
 
-        // Add the button chooser to the fragment container.
-        getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, buttonChooser).commit();
+        // Get the default input type from preferences.
+        SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
+        String inputMode = prefs.getString("input_mode", "Button" /* default value */);
+        mode = inputMode;
+        if (inputMode == "Button"){
+            // Add the button chooser to the fragment container.
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, buttonChooser).commit();
+            modeToggleButton.setChecked(true);
+        } else {
+            // Add the slider chooser to the fragment container.
+            getSupportFragmentManager().beginTransaction().add(R.id.fragmentContainer, sliderChooser).commit();
+            modeToggleButton.setChecked(false);
+        }
 
         // Register listener for mode toggle button.  It should switch between the discrete button
         // chooser and the slider chooser.
-        modeToggleButton = (ToggleButton)findViewById(R.id.modeToggleButton);
         modeToggleButton.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
