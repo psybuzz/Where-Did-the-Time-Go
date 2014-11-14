@@ -1,6 +1,7 @@
 package wdttg.wheredidthetimego.history;
 
 import android.content.Context;
+import android.util.Log;
 
 /**
  * Hi! Use me to interact with adding and removing logs. I'll be filled in to actually interact
@@ -10,8 +11,10 @@ import android.content.Context;
  */
 public class Logger {
 
+    static Boolean isLogging = false;
+
     public interface LogFillingCallback {
-        void callback(Context context, float productivity);
+        void callback(Context context, Double productivity);
     }
 
     /**
@@ -22,23 +25,34 @@ public class Logger {
     }
 
     public static boolean isLogging(Context context) {
-        return false;
+        return isLogging;
     }
 
     public static void startLogging(Context context) {
-
+        Log.d("hi", "Started logging");
+        isLogging = true;
+        NotificationGenerator.startLogging(context);
     }
 
     public static void stopLogging(Context context) {
-
+        Log.d("hi", "Stopped logging");
+        isLogging = false;
+        NotificationGenerator.stopLogging(context);
     }
+
+    private static LogFillingSubscriber subscriber = null;
 
     /**
      * Please only register one subscriber. This is powered by pure singleton jank.
-     * @param subscriber
+     * @param sub
      */
-    public static void registerSubscriber(Context context, LogFillingSubscriber subscriber) {
+    public static void registerSubscriber(Context context, LogFillingSubscriber sub) {
+        Log.d("hi", "Registered subscriber");
+        subscriber = sub;
+    }
 
+    public static LogFillingSubscriber getSubscriber() {
+        return subscriber;
     }
 
 
