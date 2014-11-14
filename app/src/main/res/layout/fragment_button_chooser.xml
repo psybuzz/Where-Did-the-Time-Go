@@ -12,17 +12,23 @@
         android:layout_marginTop="-50dp"
         android:layout_below="@+id/slider_prod_label"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@android:color/holo_green_light"
+        android:paddingLeft="32dp"
+        android:paddingRight="32dp" />
 
     <Button
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Unproductive"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="70dp"
         android:id="@+id/unprod_button"
         android:layout_below="@+id/somewhat_button"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@android:color/holo_red_light"
+        android:paddingLeft="42dp"
+        android:paddingRight="42dp" />
 
     <Button
         android:layout_width="wrap_content"
@@ -31,6 +37,10 @@
         android:id="@+id/somewhat_button"
         android:layout_below="@+id/prod_button"
         android:layout_centerHorizontal="true"
-        android:layout_gravity="center" />
+        android:layout_gravity="center"
+        android:background="@android:color/holo_orange_light"
+        android:paddingLeft="52dp"
+        android:paddingRight="52dp"
+        android:layout_marginTop="10dp" />
 
 </FrameLayout>
