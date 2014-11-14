@@ -115,7 +115,11 @@ public class Graph extends View {
         for(int i = 0; i < magnitudes.length; i++){
             float m = magnitudes[i];
             paint.setColor(COLORS[i]);
-            canvas.drawRect(w/6+i*w*2/9, w*5/6-(m/max)*w*2/3, w*7/18+i*w*2/9, w*5/6, paint);
+            canvas.drawRect(w / 6 + i * w * 2 / 9, w * 5 / 6 - (m / max) * w * 2 / 3, w * 7 / 18 + i * w * 2 / 9, w * 5 / 6, paint);
+            paint.setColor(Color.BLUE);
+            paint.setTextAlign(Paint.Align.CENTER);
+            paint.setTextSize(24);
+            canvas.drawText("" + ((int)magnitudes[i]), 5*w/18+i*w*2/9, w*5/6+36, paint);
         }
     }
 
@@ -153,7 +157,7 @@ public class Graph extends View {
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
         paint.setColor(Color.argb(255, 200, 200, 200));
-        canvas.drawRect(w/12, w/12, w*11/12, w*11/12, paint);
+        canvas.drawRect(w / 12, w / 12, w * 11 / 12, w * 11 / 12, paint);
         paint.setColor(Color.argb(255, 0, 0, 0));
         canvas.drawRect(rectf, paint);
         if(mode == 0){
@@ -161,19 +165,19 @@ public class Graph extends View {
             paint.setColor(Color.BLUE);
             paint.setTextSize(36);
             paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText("Pie Chart", w/6, w*5/6+48, paint);
+            canvas.drawText("Pie Chart", w/2, w*1/6-12, paint);
         } else if(mode == 1){
             drawBar(canvas);
             paint.setColor(Color.BLUE);
             paint.setTextSize(36);
             paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText("Bar Chart", w/6, w*5/6+48, paint);
+            canvas.drawText("Bar Chart", w/2, w*1/6-12, paint);
         } else if(mode == 2){
             drawScatter(canvas);
             paint.setColor(Color.BLUE);
             paint.setTextSize(36);
             paint.setTextAlign(Paint.Align.CENTER);
-            canvas.drawText("Scatterplot", w/6, w*5/6+48, paint);
+            canvas.drawText("Scatterplot", w/2, w*1/6-12, paint);
         }
     }
 
