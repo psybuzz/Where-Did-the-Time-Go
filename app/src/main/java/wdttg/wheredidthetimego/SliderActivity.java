@@ -37,17 +37,19 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
         Calendar calendar = Calendar.getInstance();
         int hour = calendar.get(Calendar.HOUR_OF_DAY);
         int minute = calendar.get(Calendar.MINUTE);
-        int oldhour = minute < 30 ? hour - 1 : hour;
-        int oldminute = minute < 30 ? minute + 30 : minute - 30;
+        int oldHour = minute < 30 ? hour - 1 : hour;
+        int oldMinute = minute < 30 ? minute + 30 : minute - 30;
         String am = hour < 12 ? "am" : "pm";
-        String oldam = oldhour < 12 ? "am" : "pm";
+        String oldam = oldHour < 12 ? "am" : "pm";
         hour = am == "am" ? hour : hour - 12;
-        oldhour = oldhour < 1 ? oldhour + 12 : oldhour;
+        oldHour = oldHour < 1 ? oldHour + 12 : oldHour;
         hour = hour < 1 ? hour + 12 : hour;
-        oldhour = oldam == "am" ? oldhour : oldhour - 12;
+        oldHour = oldam == "am" ? oldHour : oldHour - 12;
+        String oldMinuteStr = oldMinute < 10 ? "0" + String.valueOf(oldMinute) : String.valueOf(oldMinute);
+        String minuteStr = minute < 10 ? "0" + String.valueOf(minute) : String.valueOf(minute);
         timespanLabel = (TextView) findViewById(R.id.timespan_label);
-        timespanLabel.setText("From " + oldhour + ":" + oldminute + am +
-                " to " + hour + ":" + minute + oldam + " I was");
+        timespanLabel.setText("From " + oldHour + ":" + oldMinuteStr + am +
+                " to " + hour + ":" + minuteStr + oldam + " I was");
 
         // Create a slider chooser fragment.
         sliderChooser = new SliderChooser();
