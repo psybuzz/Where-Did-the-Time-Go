@@ -40,6 +40,14 @@ public class Logger {
         NotificationGenerator.stopLogging(context);
     }
 
+    public static void toggleLogging(Context context){
+        if (isLogging){
+            stopLogging(context);
+        } else {
+            startLogging(context);
+        }
+    }
+
     private static LogFillingSubscriber subscriber = null;
 
     /**
