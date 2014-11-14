@@ -13,7 +13,7 @@
     <string name="unproductive">Unproductive</string>
     <string name="action_settings">Settings</string>
     <string name="title_activity_slider">SliderActivity</string>
-    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="hello_blank_fragment">Keep doing your best!</string>
     <string name="title_activity_achart_engine_pie_chart">AChartEnginePieChartActivity</string>
 
 </resources>
