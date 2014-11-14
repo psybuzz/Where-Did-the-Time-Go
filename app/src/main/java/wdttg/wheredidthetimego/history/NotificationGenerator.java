@@ -96,9 +96,6 @@ public class NotificationGenerator extends BroadcastReceiver{
 
             if (Logger.getSubscriber() != null) {
                 Logger.getSubscriber().fillLog(current.getStartTime(), current.getEndTime(), callback);
-
-                // HACK: Bypass the subscriber model and store the static callback.
-                Logger.callback = callback;
             }
 
         }
