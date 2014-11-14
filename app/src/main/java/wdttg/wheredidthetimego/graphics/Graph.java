@@ -26,6 +26,7 @@ public class Graph extends View {
     //needed to draw a pie/bar chart:
     private float[] magnitudes;
     float total;
+    float max;
     private int[] COLORS={Color.GREEN,Color.YELLOW,Color.RED};
     RectF rectf;
     //needed to draw a scatter plot:
@@ -43,7 +44,7 @@ public class Graph extends View {
         h = (float)display.heightPixels;
 
         //pieChart and barChart
-        rectf = new RectF(w/6, w/6, w*2/3, w*2/3);
+        rectf = new RectF(w/6, w/6, w*5/6, w*5/6);
         magnitudes = new float[3];
         parsePieBar(data);
 
@@ -70,6 +71,7 @@ public class Graph extends View {
         magnitudes[0] = greenTotal;
         magnitudes[1] = yellowTotal;
         magnitudes[2] = redTotal;
+        max = Math.max(Math.max(greenTotal, yellowTotal), redTotal);
     }
 
     private void drawPie(Canvas canvas){
@@ -92,26 +94,47 @@ public class Graph extends View {
         for(int i = 0; i < magnitudes.length; i++){
             float m = magnitudes[i];
             paint.setColor(COLORS[i]);
-            canvas.drawRect(w/6+i*w*2/9, w*5/6-(m/total)*w*2/3, w*7/18+i*w*2/9, w*5/6, paint);
+            canvas.drawRect(w/6+i*w*2/9, w*5/6-(m/max)*w*2/3, w*7/18+i*w*2/9, w*5/6, paint);
         }
     }
 
     private void drawScatter(Canvas canvas){
         int segments = raw.length-1;
+        paint.setColor(Color.GRAY);
+        paint.setStrokeWidth(0);
+        canvas.drawLine(w/6, w/6+(w*2/3)*7/10, w*5/6, w/6+(w*2/3)*7/10, paint);
+        canvas.drawLine(w/6, w/6+(w*2/3)*3/10, w*5/6, w/6+(w*2/3)*3/10, paint);
+        paint.setColor(Color.WHITE);
+        paint.setStrokeWidth(5);
         for(int i = 0; i < raw.length-1; i++){
-            paint.setColor(Color.BLACK);
             canvas.drawLine(w/6+(w*2/3)*i/segments, w/6+(w*2/3)*(100-raw[i])/100,
                 w/6+(w*2/3)*(i+1)/segments,w/6+(w*2/3)*(100-raw[i+1])/100, paint
             );
         }
+        for(int i = 0; i < raw.length; i++){
+            if(raw[i] < 30) {
+                paint.setColor(Color.RED);
+            } else if(raw[i] < 70){
+                paint.setColor(Color.YELLOW);
+            } else {
+                paint.setColor(Color.GREEN);
+            }
+            canvas.drawCircle(w/6+(w*2/3)*i/segments, w/6+(w*2/3)*(100-raw[i])/100, 10, paint);
+        }
         paint.setColor(Color.BLUE);
-        canvas.drawText(time[0], w/6, w*2/3, paint);
-        canvas.drawText(time[time.length-1], w*5/6, w*2/3, paint);
+        paint.setTextSize(24);
+        paint.setTextAlign(Paint.Align.CENTER);
+        canvas.drawText(time[0], w/6, w*5/6+36, paint);
+        canvas.drawText(time[time.length-1], w*5/6, w*5/6+36, paint);
     }
 
     @Override
     protected void onDraw(Canvas canvas) {
         super.onDraw(canvas);
+        paint.setColor(Color.argb(255, 200, 200, 200));
+        canvas.drawRect(w/12, w/12, w*11/12, w*11/12, paint);
+        paint.setColor(Color.argb(255, 0, 0, 0));
+        canvas.drawRect(rectf, paint);
         if(mode == 0){
             drawPie(canvas);
         } else if(mode == 1){
