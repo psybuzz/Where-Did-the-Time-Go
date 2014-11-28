@@ -60,6 +60,7 @@ public class NotificationGenerator extends BroadcastReceiver{
                 .addAction(0, "Kinda", kindaPending)
                 .addAction(0, "No", noPending)
                 .setContentIntent(tappedPending)
+                .setVibrate(new long[]{100, 200, 100, 600});
                 ;
 
         NotificationManager manager = (NotificationManager)

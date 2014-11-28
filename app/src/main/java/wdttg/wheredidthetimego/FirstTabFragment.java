@@ -5,14 +5,23 @@ import android.content.Context;
 import android.net.Uri;
 import android.os.Bundle;
 import android.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.TextView;
+
+import java.text.DateFormat;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.List;
 
 import wdttg.wheredidthetimego.graphics.Graph;
+import wdttg.wheredidthetimego.history.LogEntry;
+import wdttg.wheredidthetimego.history.LogRepository;
 import wdttg.wheredidthetimego.history.Logger;
 
 
@@ -77,29 +86,58 @@ public class FirstTabFragment extends Fragment {
         // Inflate the layout for this fragment
         View v = inflater.inflate(R.layout.fragment_first_tab, container, false);
         FrameLayout fl = (FrameLayout) v.findViewById(R.id.mainframe);
-        float[] fakeData = new float[17];
-        String[] blah = new String[17]; // TODO: Use real data
-        blah[0] = "2:00 PM";
-        blah[16] = "10:00 PM";
-        fakeData[0] = 5;
-        fakeData[1] = 25;
-        fakeData[2] = 35;
-        fakeData[3] = 80;
-        fakeData[4] = 60;
-        fakeData[5] = 0;
-        fakeData[6] = 45;
-        fakeData[7] = 45;
-        fakeData[8] = 75;
-        fakeData[9] = 60;
-        fakeData[10] = 10;
-        fakeData[11] = 85;
-        fakeData[12] = 60;
-        fakeData[13] = 75;
-        fakeData[14] = 100;
-        fakeData[15] = 90;
-        fakeData[16] = 95;
-        pg = new Graph(v.getContext(), 2, fakeData, blah);
-        fl.addView(pg);
+        TextView descriptionText = (TextView) v.findViewById(R.id.productivityText);
+
+        // Retrieve data stored in the log repository.
+        LogRepository repository = new LogRepository(v.getContext());
+        long now = System.currentTimeMillis();
+        long maxTimeRange = 12*60*60*1000;   // Max time range of 12 hours.
+        List<LogEntry> entries = repository.getEntriesBetween(now - maxTimeRange, now);
+        int numEntries = entries.size();
+
+        long earliestTime = numEntries > 0 ? entries.get(0).getStartTime() : now - maxTimeRange;
+        long latestTime = numEntries > 0 ? entries.get(numEntries - 1).getEndTime() : now;
+
+        // Load the data into arrays to be displayed.
+        float[] fakeData = new float[numEntries];
+        String[] blah = new String[numEntries];
+
+        // TODO - collect entry values into bins when the number of entries is very large.
+        DateFormat formatter = new SimpleDateFormat("hh:mm a");
+        for (int i=0; i<numEntries; i++){
+            LogEntry entry = entries.get(i);
+            if (numEntries >= 4 && i%(numEntries / 4) == 0){       // Add 4 time labels along the x-axis.
+                Date date = new Date(entry.getStartTime());
+                blah[i] = formatter.format(date);
+            } else {
+                blah[i] = "";
+            }
+
+            // Set the productivity if present.  Otherwise, use the default value.
+            if (!entry.equals(null) && entry.getProductivity() != null) {
+                fakeData[i] = entry.getProductivity().floatValue()*(float)100.0;
+            } else {
+                fakeData[i] = (float)50.0;
+            }
+        }
+
+        // Display the results, or a special message if no entries exist.
+        if (numEntries > 0){
+            pg = new Graph(v.getContext(), 2, fakeData, blah);
+            fl.addView(pg);
+
+            float prod = repository.getAverageProductivityBetween(earliestTime, latestTime);
+            String prodPercent = String.valueOf(Math.round(prod*100));
+            String newDescription = "In the last 12 hours, you've been "+
+                    prodPercent+
+                    "% productive!";
+            if (prod > 0.85) newDescription += "  Awesome!";
+            if (prod < 0.15) newDescription += "  Get focused!";
+
+            descriptionText.setText(newDescription);
+        } else {
+            descriptionText.setText("No entries were recorded in the last 12 hours.  Hit the play start button to begin tracking.");
+        }
 
         // Add listener for the play button and switch graph view button.
         switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
@@ -119,6 +157,11 @@ public class FirstTabFragment extends Fragment {
                     playButton.setImageResource(R.drawable.stop);
                 } else {
                     playButton.setImageResource(R.drawable.play);
+
+                    // Clear the log repository when we start a new session.
+                    // TODO - Re-evaluate this behavior.
+                    LogRepository repository = new LogRepository(view.getContext());
+                    repository.clearTable();
                 }
             }
         });
