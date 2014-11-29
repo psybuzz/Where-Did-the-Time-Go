@@ -26,6 +26,8 @@
 
     <string name="pref_title_ping_interval">Ping Interval</string>
     <string-array name="pref_interval_titles">
+        <item>1 minute</item>
+        <item>5 minutes</item>
         <item>15 minutes</item>
         <item>30 minutes</item>
         <item>1 hour</item>
@@ -33,6 +35,8 @@
         <item>Never</item>
     </string-array>
     <string-array name="pref_interval_list_values">
+        <item>1</item>
+        <item>5</item>
         <item>15</item>
         <item>30</item>
         <item>60</item>

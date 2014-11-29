@@ -120,13 +120,33 @@ public class FirstTabFragment extends Fragment {
                 fakeData[i] = (float)50.0;
             }
         }
+        // Set the x-axis label for the ending time.
+        if (numEntries > 1){
+            Date date = new Date(entries.get(numEntries - 1).getEndTime());
+            blah[numEntries - 1] = formatter.format(date);
+        }
 
         // Display the results, or a special message if no entries exist.
         if (numEntries > 0){
             pg = new Graph(v.getContext(), 2, fakeData, blah);
             fl.addView(pg);
 
-            float prod = repository.getAverageProductivityBetween(earliestTime, latestTime);
+            Log.d("num entries:", String.valueOf(numEntries));
+//            float prod = repository.getAverageProductivityBetween(earliestTime, latestTime);
+            float sum = 0;
+            int numCounted = 0;
+            for (LogEntry entry : entries) {
+                if (entry.getProductivity() == null) {
+                    continue;
+                }
+
+                sum += entry.getProductivity();
+                numCounted++;
+            }
+
+            float prod = sum / numCounted;
+            // end modified
+
             String prodPercent = String.valueOf(Math.round(prod*100));
             String newDescription = "In the last 12 hours, you've been "+
                     prodPercent+
@@ -155,13 +175,13 @@ public class FirstTabFragment extends Fragment {
                 Logger.toggleLogging(view.getContext());
                 if (Logger.isLogging(view.getContext())){
                     playButton.setImageResource(R.drawable.stop);
-                } else {
-                    playButton.setImageResource(R.drawable.play);
 
                     // Clear the log repository when we start a new session.
                     // TODO - Re-evaluate this behavior.
                     LogRepository repository = new LogRepository(view.getContext());
                     repository.clearTable();
+                } else {
+                    playButton.setImageResource(R.drawable.play);
                 }
             }
         });

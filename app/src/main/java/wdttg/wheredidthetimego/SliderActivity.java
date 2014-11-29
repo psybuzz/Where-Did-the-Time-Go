@@ -7,6 +7,7 @@ import android.preference.PreferenceManager;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentTransaction;
+import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.widget.CompoundButton;
@@ -67,6 +68,7 @@ public class SliderActivity extends FragmentActivity implements ButtonChooser.On
         // Get the default input type from preferences.
         SharedPreferences prefs = PreferenceManager.getDefaultSharedPreferences(this);
         String inputMode = prefs.getString("input_mode", "Button" /* default value */);
+
         mode = inputMode;
         if (inputMode == "Button"){
             // Add the button chooser to the fragment container.

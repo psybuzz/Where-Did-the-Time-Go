@@ -3,6 +3,10 @@ package wdttg.wheredidthetimego.history;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.content.SharedPreferences.Editor;
+import android.preference.PreferenceManager;
+import android.util.Log;
+
+import wdttg.wheredidthetimego.MainActivity;
 
 
 /**
@@ -47,15 +51,17 @@ public class NotificationSettings {
     Integer ledRGB;
 
     private static SharedPreferences getSharedPreferences(Context context) {
-        return context.getSharedPreferences("WDTTGPreferenceKey", Context.MODE_PRIVATE);
+//        return context.getSharedPreferences("WDTTGPreferenceKey", Context.MODE_PRIVATE);
+        return PreferenceManager.getDefaultSharedPreferences(context);
     }
 
     public static NotificationSettings getSettings(Context context) {
         SharedPreferences preferences = getSharedPreferences(context);
 
         NotificationSettings toReturn = new NotificationSettings();
+        long timePeriod = Integer.parseInt(preferences.getString("interval_list", "1"))*1L*60*1000;
 
-        toReturn.timePeriod = preferences.getLong("timePeriod", 1L*60*1000);
+        toReturn.timePeriod = preferences.getLong("timePeriod", timePeriod);
         toReturn.defaultInputType = NotificationInputType
                 .valueOf(preferences.getString("defaultInputType", "Buttons"));
         toReturn.kindaProductivePercent = (double)
