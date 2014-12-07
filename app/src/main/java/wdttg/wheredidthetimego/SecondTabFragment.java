@@ -43,7 +43,7 @@ public class SecondTabFragment extends Fragment {
     ExpandableListAdapter listAdapter;
     ExpandableListView expListView;
     List<String> listDataHeader;
-    HashMap<String, List<LogEntry>> listDataChild;
+    HashMap<String, List<String>> listDataChild;
 
     private OnFragmentInteractionListener mListener;
 
@@ -85,45 +85,87 @@ public class SecondTabFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_second_tab, container, false);
 
         // get the listview
-        expListView = (ExpandableListView) v.findViewById(R.id.lvExp);
+        expListView = (ExpandableListView) v.findViewById(R.id.logList);
 
         // preparing list data
-        prepareListData();
+        prepareListData(v);
 
         listAdapter = new ExpandableListAdapter(expListView.getContext(), listDataHeader, listDataChild);
 
         // setting list adapter
         expListView.setAdapter(listAdapter);
+        Log.d("wow:", "Setup!");
+        expListView.setOnGroupClickListener(new ExpandableListView.OnGroupClickListener() {
+            @Override
+            public boolean onGroupClick(ExpandableListView expandableListView, View view, int i, long l) {
+                Log.d("wow:", "On group click!");
+                return false;
+            }
+        });
+        expListView.setOnGroupExpandListener(new ExpandableListView.OnGroupExpandListener() {
+            @Override
+            public void onGroupExpand(int i) {
+                Log.d("wow:", "On group expand!");
+            }
+        });
+        expListView.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+            @Override
+            public void onGroupCollapse(int i) {
+                Log.d("wow:", "On group collapse!");
+            }
+        });
+        expListView.setOnChildClickListener(new ExpandableListView.OnChildClickListener() {
+            @Override
+            public boolean onChildClick(ExpandableListView expandableListView, View view, int i, int i2, long l) {
+                Log.d("wow:", "On Child click!");
+                return false;
+            }
+        });
+
         return v;
     }
 
-    private void prepareListData() {
+    private void prepareListData(View v) {
         listDataHeader = new ArrayList<String>();
-        listDataChild = new HashMap<String, List<LogEntry>>();
+        listDataChild = new HashMap<String, List<String>>();
 
         final long MILLISECONDS_PER_DAY = 86400000;
         final long MILLISECONDS_PER_HALF_HOUR = 1800000;
 
-        // Adding child data    // TODO: Use real data (getLogsBetween?)
+        LogRepository repository = new LogRepository(v.getContext());
+        List<LogEntry> entries;
+        int numEntries;
+
+        // Adding child data
         long day = System.currentTimeMillis();
         for (int i = 0; i < 30; i++) {
-            long startTime = day;
-            day -= MILLISECONDS_PER_DAY;
-
             Date currDate = new Date(day);
             String date = new SimpleDateFormat("EEE, MMM d yyyy").format(currDate);
             listDataHeader.add(date);
 
-            List<LogEntry> logs = new ArrayList<LogEntry>();
-            for (int j = 0; j < 48; j++) {
-                double productivity = Math.random()*1.00;
-                long endTime = startTime;
-                startTime -= MILLISECONDS_PER_HALF_HOUR;
+            // Get the appropriate data within the time range.
+            entries = repository.getEntriesBetween(day - MILLISECONDS_PER_DAY, day);
+            numEntries = entries.size();
 
-                LogEntry log = new LogEntry(0, startTime, endTime, productivity);
-                logs.add(log);
+            List<String> logs = new ArrayList<String>();
+            if (numEntries > 0){
+                try{
+                    float avgProductivity = repository.getAverageProductivityBetween(day - MILLISECONDS_PER_DAY, day);
+                    logs.add("The average productivity was " + String.valueOf(avgProductivity) + "%");
+                    for (int j=0; j<numEntries; j++){
+                        logs.add(entries.get(j).getProductivity().toString());
+                    }
+                } catch (Exception e){
+                    logs.add("Strange...I wasn't able to read your saved logs for this date.");
+                }
+            } else {
+                logs.add("Sorry, no productivity entries were found for this date.");
             }
+
             listDataChild.put(listDataHeader.get(i), logs);
+
+            // Check the previous date.
+            day -= MILLISECONDS_PER_DAY;
         }
 
 

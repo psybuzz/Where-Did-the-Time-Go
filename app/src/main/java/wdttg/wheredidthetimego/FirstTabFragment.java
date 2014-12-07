@@ -193,6 +193,12 @@ public class FirstTabFragment extends Fragment {
             }
         });
 
+        // Restore the state of the play switch.
+        boolean isLogging = Logger.isLogging(v.getContext());
+        if (isLogging){
+            playSwitch.setChecked(true);
+        }
+
         return v;
     }
 
