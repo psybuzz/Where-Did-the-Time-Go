@@ -90,6 +90,9 @@ public class FirstTabFragment extends Fragment {
         View v = inflater.inflate(R.layout.fragment_first_tab, container, false);
         FrameLayout fl = (FrameLayout) v.findViewById(R.id.mainframe);
         TextView descriptionText = (TextView) v.findViewById(R.id.productivityText);
+        switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
+        playSwitch = (Switch) v.findViewById(R.id.playSwitch);
+        clearButton = (ImageButton) v.findViewById(R.id.clearButton);
 
         // Retrieve data stored in the log repository.
         LogRepository repository = new LogRepository(v.getContext());
@@ -158,15 +161,13 @@ public class FirstTabFragment extends Fragment {
             if (prod < 0.15) newDescription += "  Get focused!";
 
             descriptionText.setText(newDescription);
+            switchGraphButton.setEnabled(true);
         } else {
             descriptionText.setText("No entries were recorded in the last 12 hours.  Hit the play start button to begin tracking.");
+            switchGraphButton.setEnabled(false);
         }
 
         // Add listener for the play button and switch graph view button.
-        switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
-        playSwitch = (Switch) v.findViewById(R.id.playSwitch);
-        clearButton = (ImageButton) v.findViewById(R.id.clearButton);
-
         switchGraphButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
