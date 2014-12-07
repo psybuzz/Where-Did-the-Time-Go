@@ -10,8 +10,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.Switch;
 import android.widget.TextView;
 
 import java.text.DateFormat;
@@ -48,7 +50,8 @@ public class FirstTabFragment extends Fragment {
 
     private Graph pg;
     private ImageButton switchGraphButton;
-    private ImageButton playButton;
+    private Switch playSwitch;
+    private ImageButton clearButton;
 
     /**
      * Use this factory method to create a new instance of
@@ -161,7 +164,8 @@ public class FirstTabFragment extends Fragment {
 
         // Add listener for the play button and switch graph view button.
         switchGraphButton = (ImageButton) v.findViewById(R.id.switchGraphButton);
-        playButton = (ImageButton) v.findViewById(R.id.playButton);
+        playSwitch = (Switch) v.findViewById(R.id.playSwitch);
+        clearButton = (ImageButton) v.findViewById(R.id.clearButton);
 
         switchGraphButton.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -169,29 +173,24 @@ public class FirstTabFragment extends Fragment {
                 pg.changeType();
             }
         });
-        playButton.setOnClickListener(new View.OnClickListener() {
+        playSwitch.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
             @Override
-            public void onClick(View view) {
-                Logger.toggleLogging(view.getContext());
-                if (Logger.isLogging(view.getContext())){
-                    playButton.setImageResource(R.drawable.stop);
-
-                    // Clear the log repository when we start a new session.
-                    // TODO - Re-evaluate this behavior.
-                    LogRepository repository = new LogRepository(view.getContext());
-                    repository.clearTable();
-                } else {
-                    playButton.setImageResource(R.drawable.play);
+            public void onCheckedChanged(CompoundButton compoundButton, boolean b) {
+                View view = compoundButton.getRootView();
+                boolean isLogging = Logger.isLogging(view.getContext());
+                if ((isLogging && b == false) || (b && isLogging == false)) {
+                    Logger.toggleLogging(view.getContext());
                 }
             }
         });
-
-        // Update the play/pause button.
-        if (Logger.isLogging(v.getContext())){
-            playButton.setImageResource(R.drawable.stop);
-        } else {
-            playButton.setImageResource(R.drawable.play);
-        }
+        clearButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                // Clear the log repository when we start a new session.
+                LogRepository repository = new LogRepository(view.getContext());
+                repository.clearTable();
+            }
+        });
 
         return v;
     }
